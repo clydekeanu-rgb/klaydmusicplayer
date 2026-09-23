@@ -31,6 +31,7 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Track[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<Track[]>([]);
   const [history, setHistory] = useState<Track[]>([]);
 
@@ -50,14 +51,21 @@ export function App() {
     setActiveTab('explore');
     if (!query.trim()) {
       setSearchResults([]);
+      setSearchError(null);
       return;
     }
     setIsSearching(true);
+    setSearchError(null);
     try {
       const results = await searchTracks(query);
       setSearchResults(results);
-    } catch (e) {
+      if (results.length === 0) {
+        setSearchError('No tracks matched this search query.');
+      }
+    } catch (e: any) {
       console.warn('Search error:', e);
+      setSearchError(e.message || 'Could not connect to music search API.');
+      setSearchResults([]);
     } finally {
       setIsSearching(false);
     }
@@ -141,6 +149,30 @@ export function App() {
                   onAddToQueue={(t) => player.addToQueue(t)}
                   onToggleFavorite={() => refreshLibrary()}
                 />
+              ) : searchError ? (
+                <div className="py-16 px-4 flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-4">
+                  <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400">
+                    <Music2 className="w-8 h-8" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="font-semibold text-white">Search Notice</h3>
+                    <p className="text-xs text-white/60 leading-relaxed">{searchError}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSearch(searchQuery || 'Top Hits 2026')}
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition-all"
+                    >
+                      Retry Search
+                    </button>
+                    <button
+                      onClick={() => player.setIsSettingsOpen(true)}
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 transition-all"
+                    >
+                      Configure Backend URL
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <div className="py-20 flex flex-col items-center justify-center text-white/30 text-center">
                   <Music2 className="w-12 h-12 mb-3 stroke-[1.2] text-white/20" />

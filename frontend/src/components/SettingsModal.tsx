@@ -1,6 +1,7 @@
-import React from 'react';
-import { X, Sliders, Radio, Sparkles, Server, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Sliders, Radio, Server, Zap, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PlayerSettings } from '../types';
+import { setCustomApiBase } from '../services/api';
 
 interface SettingsModalProps {
   settings: PlayerSettings;
@@ -15,6 +16,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onClose,
   onUpdateSettings,
 }) => {
+  const [apiUrl, setApiUrl] = useState(() => {
+    return (typeof window !== 'undefined' ? localStorage.getItem('ytm_api_base') : '') || '';
+  });
+  const [testStatus, setTestStatus] = useState<'idle' | 'testing' | 'ok' | 'fail'>('idle');
+
+  const handleTestApi = async (urlToTest: string) => {
+    setTestStatus('testing');
+    const base = urlToTest.trim() || '/api';
+    const cleanBase = base.endsWith('/api') ? base : `${base.replace(/\/$/, '')}/api`;
+    try {
+      const res = await fetch(`${cleanBase}/health`, { signal: AbortSignal.timeout(4000) });
+      if (res.ok) {
+        setTestStatus('ok');
+      } else {
+        setTestStatus('fail');
+      }
+    } catch {
+      setTestStatus('fail');
+    }
+  };
+
+  const handleSaveApi = () => {
+    setCustomApiBase(apiUrl.trim() || null);
+    handleTestApi(apiUrl);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -91,14 +118,59 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </button>
           </div>
 
+          {/* Custom Backend API Server */}
+          <div className="space-y-2 pt-3 border-t border-white/5">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-semibold text-white flex items-center gap-2">
+                <Globe className="w-4 h-4 text-sky-400" />
+                Backend API Server
+              </span>
+              {testStatus === 'testing' && (
+                <span className="text-white/40 text-[11px]">Testing...</span>
+              )}
+              {testStatus === 'ok' && (
+                <span className="text-emerald-400 text-[11px] flex items-center gap-1 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Connected
+                </span>
+              )}
+              {testStatus === 'fail' && (
+                <span className="text-red-400 text-[11px] flex items-center gap-1 font-medium">
+                  <AlertCircle className="w-3.5 h-3.5" /> Unreachable
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-white/50 leading-relaxed">
+              Default is <code className="text-white/70">/api</code>. If hosting your dedicated Node.js backend on Render, paste its URL here (e.g. <code className="text-white/70">https://your-app.onrender.com</code>).
+            </p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="e.g. https://ytm-backend.onrender.com"
+                value={apiUrl}
+                onChange={(e) => {
+                  setApiUrl(e.target.value);
+                  setTestStatus('idle');
+                }}
+                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-white/20 focus:outline-none focus:border-red-500 transition-colors font-mono"
+              />
+              <button
+                type="button"
+                onClick={handleSaveApi}
+                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-xs font-semibold text-white transition-all shrink-0"
+              >
+                Save & Test
+              </button>
+            </div>
+          </div>
+
           {/* Architecture Badge */}
           <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-1.5 text-xs text-white/60">
             <div className="flex items-center gap-2 text-white font-medium">
               <Server className="w-4 h-4 text-emerald-400" />
-              <span>Cloudflare Worker Edge Architecture</span>
+              <span>Full-Stack Architecture (Render / Vercel)</span>
             </div>
             <p className="text-[11px] text-white/40 leading-relaxed">
-              Powered by serverless InnerTube proxying, HTTP 206 partial content range streaming, and LRCLIB synced lyrics.
+              Powered by InnerTube music search, LRCLIB synchronized lyrics, and browser dual-engine playback.
             </p>
           </div>
         </div>
