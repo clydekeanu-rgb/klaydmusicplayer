@@ -38,5 +38,5 @@ export interface LyricsResponse {
 
 export interface WorkerEnv {
   ENVIRONMENT?: string;
-  MUSIC_CACHE?: KVNamespace;
+  MUSIC_CACHE?: any;
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Track } from '../types';
-import { Play, ListPlus, Heart, ListMusic } from 'lucide-react';
+import { Play, MoreVertical, ListPlus, Heart, Radio, ListMusic } from 'lucide-react';
 
 interface TrackListProps {
   tracks: Track[];
@@ -21,6 +21,7 @@ export const TrackList: React.FC<TrackListProps> = ({
   onAddToQueue,
   onToggleFavorite,
 }) => {
+  const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
 
   return (
     <div className="space-y-1">

@@ -1,51 +1,14 @@
 {
-<<<<<<< HEAD
-  "name": "ytm-worker-backend",
-  "version": "1.0.0",
-  "description": "Cloudflare Worker backend for YouTube Music streaming player",
-  "main": "src/index.ts",
-  "scripts": {
-    "start": "tsx src/server.ts",
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc --noEmit",
-    "dev:wrangler": "wrangler dev --port 8787",
-    "deploy:wrangler": "wrangler deploy"
-  },
-  "dependencies": {
-    "@hono/node-server": "^2.1.1",
-    "hono": "^4.13.8",
-    "tsx": "^4.23.15",
-    "youtubei.js": "^18.0.0"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260918.1",
-    "typescript": "^5.5.4",
-    "wrangler": "^4.134.0"
-=======
-  "name": "ytm-stream-frontend",
+  "name": "aura-music-player",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "description": "YouTube Music Streaming Player Monorepo",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "lucide-react": "^1.16.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.5.4",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.45",
-    "tailwindcss": "^3.4.11",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.3"
->>>>>>> 759ed5a832e8da2f2e1e512654a4642e5a8f133c
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "test:backend": "npm --prefix backend test",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build"
   }
 }

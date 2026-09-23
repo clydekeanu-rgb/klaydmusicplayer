@@ -1,18 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "lib": ["ESNext"],
-    "types": ["@cloudflare/workers-types"],
-    "strict": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "esModuleInterop": true
-  },
-  "include": ["src/**/*"]
-=======
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -30,5 +17,4 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
->>>>>>> 759ed5a832e8da2f2e1e512654a4642e5a8f133c
 }

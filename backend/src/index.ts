@@ -8,7 +8,7 @@ import { handleRelated } from './routes/related';
 import { WorkerEnv } from './types';
 
 export default {
-  async fetch(request: Request, env: WorkerEnv, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: WorkerEnv, ctx?: { waitUntil?: (p: Promise<any>) => void }): Promise<Response> {
     // 1. Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return handleOptions();

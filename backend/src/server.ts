@@ -8,7 +8,7 @@ console.log(`Aura Music Backend starting on http://${host}:${port}`);
 
 serve(
   {
-    fetch: (req) => worker.fetch(req, { ENVIRONMENT: process.env.NODE_ENV || 'production' }, {} as any),
+    fetch: (req) => worker.fetch(req, { ENVIRONMENT: process.env.NODE_ENV || 'production' }),
     port,
     hostname: host,
   },

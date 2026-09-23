@@ -13,6 +13,18 @@ export async function searchTracks(query: string): Promise<Track[]> {
   return data.results || [];
 }
 
+export async function getTrackStream(id: string): Promise<{
+  streamUrl: string;
+  proxyUrl: string;
+  bitrate: number;
+  mimeType: string;
+  durationSeconds?: number;
+}> {
+  const res = await fetch(`${API_BASE}/stream/${id}`);
+  if (!res.ok) throw new Error(`Stream lookup failed: ${res.statusText}`);
+  return await res.json();
+}
+
 export async function getTrackMetadata(id: string): Promise<Track> {
   const res = await fetch(`${API_BASE}/metadata/${id}`);
   if (!res.ok) throw new Error(`Metadata lookup failed: ${res.statusText}`);

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Track, LyricsData, RepeatMode, PlayerSettings } from '../types';
 import { PlayerEngine, getPlayerEngine } from '../audio/PlayerEngine';
-import { getTrackMetadata, getTrackLyrics, getRelatedTracks } from '../services/api';
+import { getTrackStream, getTrackMetadata, getTrackLyrics, getRelatedTracks } from '../services/api';
 import { updateMediaSession, updatePlaybackState, updatePositionState } from '../audio/mediaSession';
 import {
   addToHistory,

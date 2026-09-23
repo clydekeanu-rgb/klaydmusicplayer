@@ -1,6 +1,6 @@
 import React from 'react';
 import { Track } from '../types';
-import { Trash2, Music2, Radio } from 'lucide-react';
+import { Trash2, Music2, ChevronUp, ChevronDown, Radio } from 'lucide-react';
 
 interface QueueDrawerProps {
   queue: Track[];

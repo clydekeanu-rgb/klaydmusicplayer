@@ -25,7 +25,7 @@ const EXPLORE_SUGGESTIONS = [
 
 export function App() {
   const player = usePlayer();
-  useColorExtractor(player.currentTrack?.thumbnail);
+  const palette = useColorExtractor(player.currentTrack?.thumbnail);
 
   const [activeTab, setActiveTab] = useState<NavTab>('explore');
   const [searchQuery, setSearchQuery] = useState('');
@@ -287,6 +287,7 @@ export function App() {
           isPlaying={player.isPlaying}
           currentTime={player.currentTime}
           duration={player.duration}
+          volume={player.settings.volume}
           isShuffle={player.isShuffle}
           repeatMode={player.repeatMode}
           isFav={player.isFav}
@@ -297,6 +298,7 @@ export function App() {
           onPrevious={player.previousTrack}
           onNext={player.nextTrack}
           onSeek={player.seek}
+          onVolumeChange={player.setVolume}
           onToggleShuffle={player.toggleShuffle}
           onCycleRepeat={player.cycleRepeat}
           onToggleFavorite={player.toggleFavorite}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Sliders, Radio, Server, Zap } from 'lucide-react';
+import { X, Sliders, Radio, Sparkles, Server, Zap } from 'lucide-react';
 import { PlayerSettings } from '../types';
 
 interface SettingsModalProps {
@@ -95,10 +95,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-1.5 text-xs text-white/60">
             <div className="flex items-center gap-2 text-white font-medium">
               <Server className="w-4 h-4 text-emerald-400" />
-              <span>Node.js / Render Architecture</span>
+              <span>Cloudflare Worker Edge Architecture</span>
             </div>
             <p className="text-[11px] text-white/40 leading-relaxed">
-              Powered by high-performance InnerTube music search, LRCLIB synced lyrics, and browser dual-engine playback.
+              Powered by serverless InnerTube proxying, HTTP 206 partial content range streaming, and LRCLIB synced lyrics.
             </p>
           </div>
         </div>

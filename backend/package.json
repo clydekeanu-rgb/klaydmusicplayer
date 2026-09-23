@@ -1,0 +1,21 @@
+{
+  "name": "ytm-stream-backend",
+  "version": "1.0.0",
+  "description": "Node.js backend for YouTube Music streaming player",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.13.8",
+    "tsx": "^4.23.15",
+    "youtubei.js": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^5.5.4"
+  }
+}

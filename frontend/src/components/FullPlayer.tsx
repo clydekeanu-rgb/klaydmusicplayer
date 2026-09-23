@@ -9,8 +9,11 @@ import {
   Repeat,
   Repeat1,
   Heart,
+  Volume2,
+  VolumeX,
   Mic2,
   Disc3,
+  ListMusic,
 } from 'lucide-react';
 import { Track, LyricsData, RepeatMode } from '../types';
 import { LyricsView } from './LyricsView';
@@ -20,6 +23,7 @@ interface FullPlayerProps {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
+  volume: number;
   isShuffle: boolean;
   repeatMode: RepeatMode;
   isFav: boolean;
@@ -30,6 +34,7 @@ interface FullPlayerProps {
   onPrevious: () => void;
   onNext: () => void;
   onSeek: (seconds: number) => void;
+  onVolumeChange: (volume: number) => void;
   onToggleShuffle: () => void;
   onCycleRepeat: () => void;
   onToggleFavorite: () => void;
@@ -47,6 +52,7 @@ export const FullPlayer: React.FC<FullPlayerProps> = ({
   isPlaying,
   currentTime,
   duration,
+  volume,
   isShuffle,
   repeatMode,
   isFav,
@@ -57,6 +63,7 @@ export const FullPlayer: React.FC<FullPlayerProps> = ({
   onPrevious,
   onNext,
   onSeek,
+  onVolumeChange,
   onToggleShuffle,
   onCycleRepeat,
   onToggleFavorite,
