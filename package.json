@@ -1,0 +1,24 @@
+{
+  "name": "ytm-worker-backend",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker backend for YouTube Music streaming player",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc --noEmit",
+    "dev:wrangler": "wrangler dev --port 8787",
+    "deploy:wrangler": "wrangler deploy"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.13.8",
+    "tsx": "^4.23.15",
+    "youtubei.js": "^18.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260918.1",
+    "typescript": "^5.5.4",
+    "wrangler": "^4.134.0"
+  }
+}
