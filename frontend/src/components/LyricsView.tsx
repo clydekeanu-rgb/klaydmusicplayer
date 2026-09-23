@@ -15,7 +15,6 @@ export const LyricsView: React.FC<LyricsViewProps> = ({
   isLoading,
   currentTime,
   onSeek,
-  onClose,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const activeLineRef = useRef<HTMLDivElement>(null);
@@ -62,25 +61,25 @@ export const LyricsView: React.FC<LyricsViewProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-black/40 backdrop-blur-3xl border-l border-white/5 select-none relative overflow-hidden">
+    <div className="h-full flex flex-col bg-[#09090f]/70 backdrop-blur-3xl border-l border-white/[0.06] select-none relative overflow-hidden">
       {/* Header */}
-      <div className="h-14 px-6 border-b border-white/5 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2 text-white font-semibold text-sm">
-          <Mic2 className="w-4 h-4 text-red-400" />
-          <span>Live Lyrics</span>
+      <div className="h-14 px-6 border-b border-white/[0.06] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-2 text-white font-semibold text-xs sm:text-sm">
+          <Mic2 className="w-4 h-4 text-rose-400" />
+          <span>Synchronized Lyrics</span>
           {hasSynced && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 font-medium">
-              Synced
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-semibold border border-rose-500/30">
+              Live
             </span>
           )}
         </div>
         {userScrolled && (
           <button
             onClick={() => setUserScrolled(false)}
-            className="text-[11px] text-white/50 hover:text-white flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full transition-colors"
+            className="text-[11px] text-white/60 hover:text-white flex items-center gap-1 bg-white/10 px-2.5 py-1 rounded-full transition-colors"
           >
-            <Sparkles className="w-3 h-3 text-red-400" />
-            Resume Auto-scroll
+            <Sparkles className="w-3 h-3 text-rose-400" />
+            Resume Scroll
           </button>
         )}
       </div>
@@ -89,18 +88,18 @@ export const LyricsView: React.FC<LyricsViewProps> = ({
       <div
         ref={containerRef}
         onScroll={handleUserScroll}
-        className="flex-1 overflow-y-auto px-6 py-12 scroll-smooth no-scrollbar space-y-8"
+        className="flex-1 overflow-y-auto px-6 py-10 scroll-smooth no-scrollbar space-y-6 sm:space-y-8"
       >
         {isLoading ? (
           <div className="h-full flex flex-col items-center justify-center text-white/40 gap-3 py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-red-500" />
-            <p className="text-sm">Fetching lyrics...</p>
+            <Loader2 className="w-8 h-8 animate-spin text-rose-500" />
+            <p className="text-xs sm:text-sm">Loading synchronized lyrics...</p>
           </div>
         ) : !lyrics?.found ? (
           <div className="h-full flex flex-col items-center justify-center text-white/30 text-center py-20">
             <Mic2 className="w-12 h-12 stroke-[1.2] mb-3 text-white/20" />
-            <p className="text-base font-medium text-white/60">No lyrics available</p>
-            <p className="text-xs text-white/40 mt-1">Enjoy the music!</p>
+            <p className="text-base font-semibold text-white/70">No synced lyrics found</p>
+            <p className="text-xs text-white/40 mt-1">Enjoy the music on klyd</p>
           </div>
         ) : hasSynced ? (
           parsedLines.map((line, idx) => {
@@ -114,10 +113,10 @@ export const LyricsView: React.FC<LyricsViewProps> = ({
                 onClick={() => onSeek(line.time)}
                 className={`cursor-pointer transition-all duration-300 transform origin-left leading-relaxed ${
                   isActive
-                    ? 'text-white text-2xl sm:text-3xl font-bold scale-105 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                    ? 'text-white text-xl sm:text-3xl font-extrabold scale-[1.03] drop-shadow-[0_0_24px_rgba(255,255,255,0.45)]'
                     : isPassed
-                    ? 'text-white/40 text-lg sm:text-xl font-medium hover:text-white/70'
-                    : 'text-white/20 text-lg sm:text-xl font-medium hover:text-white/60'
+                    ? 'text-white/40 text-base sm:text-xl font-medium hover:text-white/70'
+                    : 'text-white/20 text-base sm:text-xl font-medium hover:text-white/50'
                 }`}
               >
                 {line.text || '♪ ♪ ♪'}
@@ -125,7 +124,7 @@ export const LyricsView: React.FC<LyricsViewProps> = ({
             );
           })
         ) : lyrics.plainLyrics ? (
-          <div className="whitespace-pre-wrap text-white/70 text-lg leading-loose font-medium">
+          <div className="whitespace-pre-wrap text-white/70 text-base sm:text-lg leading-loose font-medium">
             {lyrics.plainLyrics}
           </div>
         ) : (

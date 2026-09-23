@@ -1,6 +1,6 @@
 import React from 'react';
 import { Track } from '../types';
-import { Trash2, Music2, ChevronUp, ChevronDown, Radio } from 'lucide-react';
+import { Trash2, Music2, Radio } from 'lucide-react';
 
 interface QueueDrawerProps {
   queue: Track[];
@@ -18,17 +18,17 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
   onClearQueue,
 }) => {
   return (
-    <div className="h-full flex flex-col bg-black/40 backdrop-blur-3xl border-l border-white/5 select-none overflow-hidden">
+    <div className="h-full flex flex-col bg-[#09090f]/70 backdrop-blur-3xl border-l border-white/[0.06] select-none overflow-hidden">
       {/* Drawer Header */}
-      <div className="h-14 px-5 border-b border-white/5 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2 text-white font-semibold text-sm">
-          <Music2 className="w-4 h-4 text-red-400" />
+      <div className="h-14 px-5 border-b border-white/[0.06] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-2 text-white font-semibold text-xs sm:text-sm">
+          <Music2 className="w-4 h-4 text-rose-400" />
           <span>Playing Queue ({queue.length})</span>
         </div>
         {queue.length > 0 && (
           <button
             onClick={onClearQueue}
-            className="text-xs text-white/50 hover:text-red-400 flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
+            className="text-xs text-white/50 hover:text-rose-400 flex items-center gap-1 transition-colors px-2.5 py-1 rounded-xl hover:bg-white/[0.06]"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear</span>
@@ -42,7 +42,7 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
           <div className="h-full flex flex-col items-center justify-center text-white/30 text-center py-20">
             <Music2 className="w-12 h-12 stroke-[1.2] mb-3 text-white/20" />
             <p className="text-sm font-medium">Your queue is empty</p>
-            <p className="text-xs text-white/40 mt-1">Search for songs to start playing</p>
+            <p className="text-xs text-white/40 mt-1">Select or queue songs to play</p>
           </div>
         ) : (
           queue.map((track, idx) => {
@@ -52,23 +52,23 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
             return (
               <div
                 key={`${track.id}-${idx}`}
-                className={`group flex items-center gap-3 p-2.5 rounded-xl transition-all cursor-pointer ${
+                className={`group flex items-center gap-3 p-2.5 rounded-2xl transition-all cursor-pointer ${
                   isCurrent
-                    ? 'bg-red-500/15 border border-red-500/30 text-white'
+                    ? 'bg-rose-500/15 border border-rose-500/30 text-white'
                     : isPlayed
-                    ? 'opacity-40 hover:opacity-80 hover:bg-white/5 text-white/70'
-                    : 'hover:bg-white/5 text-white/90'
+                    ? 'opacity-40 hover:opacity-80 hover:bg-white/[0.04] text-white/70'
+                    : 'hover:bg-white/[0.04] text-white/90'
                 }`}
               >
                 {/* Thumbnail */}
                 <div
                   onClick={() => onPlayTrack(track, idx)}
-                  className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0"
+                  className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-sm"
                 >
                   <img src={track.thumbnail} alt={track.title} className="w-full h-full object-cover" />
                   {isCurrent && (
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping" />
+                      <div className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
                     </div>
                   )}
                 </div>
@@ -78,10 +78,10 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
                   onClick={() => onPlayTrack(track, idx)}
                   className="min-w-0 flex-1"
                 >
-                  <p className={`text-xs font-semibold truncate ${isCurrent ? 'text-red-400' : 'text-white'}`}>
+                  <p className={`text-xs font-semibold truncate ${isCurrent ? 'text-rose-400' : 'text-white'}`}>
                     {track.title}
                   </p>
-                  <p className="text-[11px] text-white/50 truncate">{track.artist}</p>
+                  <p className="text-[11px] text-white/50 truncate mt-0.5">{track.artist}</p>
                 </div>
 
                 {/* Duration */}
@@ -91,13 +91,13 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
                   </span>
                 )}
 
-                {/* Remove button on hover */}
+                {/* Remove button */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onRemoveTrack(idx);
                   }}
-                  className="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                  className="p-1.5 rounded-xl text-white/40 hover:text-rose-400 hover:bg-white/10 opacity-70 group-hover:opacity-100 transition-opacity shrink-0"
                   title="Remove from queue"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -109,12 +109,12 @@ export const QueueDrawer: React.FC<QueueDrawerProps> = ({
       </div>
 
       {/* Auto-Queue Indicator */}
-      <div className="p-3 border-t border-white/5 bg-white/[0.02] flex items-center justify-between text-xs text-white/50">
+      <div className="p-3 border-t border-white/[0.06] bg-white/[0.02] flex items-center justify-between text-xs text-white/50">
         <div className="flex items-center gap-1.5">
-          <Radio className="w-3.5 h-3.5 text-red-400 animate-pulse" />
-          <span>Radio autoplay active</span>
+          <Radio className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
+          <span className="text-[11px] font-medium text-white/70">Smart Radio Active</span>
         </div>
-        <span className="text-[11px] text-white/30">Auto-fetches similar songs</span>
+        <span className="text-[10px] text-white/35">Autofills next songs</span>
       </div>
     </div>
   );

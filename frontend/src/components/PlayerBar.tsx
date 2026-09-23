@@ -98,7 +98,7 @@ export const PlayerBar: React.FC<PlayerBarProps> = ({
   };
 
   return (
-    <footer className="h-24 px-4 sm:px-6 bg-black/60 backdrop-blur-2xl border-t border-white/10 z-30 flex flex-col justify-center select-none relative">
+    <footer className="hidden md:flex h-24 px-6 bg-[#09090f]/90 backdrop-blur-2xl border-t border-white/[0.08] z-30 flex-col justify-center select-none relative">
       {/* Interactive Scrubber line right at top of player bar */}
       <div
         ref={scrubberRef}

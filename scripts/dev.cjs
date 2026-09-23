@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-console.log('Starting Aura Music Backend (port 8787) & Frontend (port 5173)...');
+console.log('Starting klyd Music Backend (port 8787) & Frontend (port 5173)...');
 
 const backend = spawn('npm', ['--prefix', 'backend', 'run', 'dev'], {
   stdio: 'inherit',

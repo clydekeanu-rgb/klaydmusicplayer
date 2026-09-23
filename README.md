@@ -1,6 +1,6 @@
-# Aura Music — YouTube Music Streaming Player
+# klyd — Next-Gen Music Stream & Player
 
-A modern, high-performance YouTube Music streaming web player powered by a dedicated Node.js backend (optimized for [Render](https://render.com)) and a React SPA frontend with dual-engine crossfade playback, synchronized lyrics, and dynamic album-art theming.
+A modern, high-performance music streaming web player powered by YouTube Music, engineered with a dedicated Node.js backend (optimized for [Render](https://render.com) and [Vercel](https://vercel.com)) and a responsive React SPA frontend with mobile-first UI/UX, dual-engine crossfade playback, synchronized lyrics, and dynamic album-art theming.
 
 ---
 

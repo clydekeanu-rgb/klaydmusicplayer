@@ -4,7 +4,7 @@ import worker from './index';
 const port = Number(process.env.PORT) || 8787;
 const host = '0.0.0.0';
 
-console.log(`Aura Music Backend starting on http://${host}:${port}`);
+console.log(`klyd Music Backend starting on http://${host}:${port}`);
 
 serve(
   {

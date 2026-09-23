@@ -52,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const headers = {
-      'User-Agent': 'Aura-Music-Player/1.0.0',
+      'User-Agent': 'klyd-Music-Player/1.0.0',
     };
 
     let getUrl = `https://lrclib.net/api/get?track_name=${encodeURIComponent(cleanTitle)}`;
