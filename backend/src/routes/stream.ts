@@ -14,14 +14,14 @@ export async function handleStream(
   try {
     const yt = await getYtIos();
     const info = await yt.getBasicInfo(videoId);
-    const audioFormats = info.streaming_data?.adaptive_formats?.filter(f => f.has_audio) || [];
+    const audioFormats = info.streaming_data?.adaptive_formats?.filter((f: any) => f.has_audio) || [];
 
     if (audioFormats.length === 0) {
       return errorResponse('No playable audio formats found for this video', 404);
     }
 
     // Sort by bitrate descending to choose the best audio quality
-    const sorted = [...audioFormats].sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0));
+    const sorted = [...audioFormats].sort((a: any, b: any) => (b.bitrate || 0) - (a.bitrate || 0));
     const best = sorted[0];
 
     if (!best.url) {
@@ -61,13 +61,13 @@ export async function handleAudioProxy(
   try {
     const yt = await getYtIos();
     const info = await yt.getBasicInfo(videoId);
-    const audioFormats = info.streaming_data?.adaptive_formats?.filter(f => f.has_audio) || [];
+    const audioFormats = info.streaming_data?.adaptive_formats?.filter((f: any) => f.has_audio) || [];
 
     if (audioFormats.length === 0) {
       return errorResponse('No playable audio formats found', 404);
     }
 
-    const sorted = [...audioFormats].sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0));
+    const sorted = [...audioFormats].sort((a: any, b: any) => (b.bitrate || 0) - (a.bitrate || 0));
     const targetUrl = sorted[0].url;
 
     if (!targetUrl) {
