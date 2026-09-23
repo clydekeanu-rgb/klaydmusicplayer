@@ -2,14 +2,19 @@ const { spawn } = require('child_process');
 
 console.log('Starting klyd Music Backend (port 8787) & Frontend (port 5173)...');
 
-const backend = spawn('npm', ['--prefix', 'backend', 'run', 'dev'], {
+const isWin = process.platform === 'win32';
+const backendCmd = isWin ? 'cmd.exe' : 'npm';
+const backendArgs = isWin ? ['/c', 'npm', '--prefix', 'backend', 'run', 'dev'] : ['--prefix', 'backend', 'run', 'dev'];
+
+const frontendCmd = isWin ? 'cmd.exe' : 'npm';
+const frontendArgs = isWin ? ['/c', 'npm', '--prefix', 'frontend', 'run', 'dev'] : ['--prefix', 'frontend', 'run', 'dev'];
+
+const backend = spawn(backendCmd, backendArgs, {
   stdio: 'inherit',
-  shell: true,
 });
 
-const frontend = spawn('npm', ['--prefix', 'frontend', 'run', 'dev'], {
+const frontend = spawn(frontendCmd, frontendArgs, {
   stdio: 'inherit',
-  shell: true,
 });
 
 function cleanup() {

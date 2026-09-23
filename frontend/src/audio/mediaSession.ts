@@ -1,5 +1,38 @@
 import { Track } from '../types';
 
+// Minimal silent WAV data URI to keep the mobile OS audio session alive in background
+const SILENT_AUDIO_URI =
+  'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+
+let silentAudio: HTMLAudioElement | null = null;
+
+function getSilentAudio(): HTMLAudioElement | null {
+  if (typeof window === 'undefined' || typeof Audio === 'undefined') return null;
+  if (!silentAudio) {
+    try {
+      silentAudio = new Audio(SILENT_AUDIO_URI);
+      silentAudio.loop = true;
+      (silentAudio as any).playsInline = true;
+      silentAudio.volume = 0.01;
+    } catch {
+      silentAudio = null;
+    }
+  }
+  return silentAudio;
+}
+
+export function syncAudioSession(playing: boolean): void {
+  const audio = getSilentAudio();
+  if (!audio) return;
+  try {
+    if (playing) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  } catch {}
+}
+
 export function updateMediaSession(
   track: Track | null,
   handlers: {
@@ -14,6 +47,7 @@ export function updateMediaSession(
 
   if (!track) {
     navigator.mediaSession.metadata = null;
+    syncAudioSession(false);
     return;
   }
 
@@ -30,8 +64,14 @@ export function updateMediaSession(
     ],
   });
 
-  navigator.mediaSession.setActionHandler('play', handlers.onPlay);
-  navigator.mediaSession.setActionHandler('pause', handlers.onPause);
+  navigator.mediaSession.setActionHandler('play', () => {
+    syncAudioSession(true);
+    handlers.onPlay();
+  });
+  navigator.mediaSession.setActionHandler('pause', () => {
+    syncAudioSession(false);
+    handlers.onPause();
+  });
   navigator.mediaSession.setActionHandler('previoustrack', handlers.onPrevious);
   navigator.mediaSession.setActionHandler('nexttrack', handlers.onNext);
   navigator.mediaSession.setActionHandler('seekto', handlers.onSeek);
@@ -41,6 +81,7 @@ export function updatePlaybackState(state: 'playing' | 'paused' | 'none'): void 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.playbackState = state;
   }
+  syncAudioSession(state === 'playing');
 }
 
 export function updatePositionState(duration: number, playbackRate = 1, position = 0): void {
